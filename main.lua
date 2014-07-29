@@ -27,10 +27,50 @@ function types.create(name,year)
 	return t
 end
 
+function displayYearCompareData(firstYear, secondYear, county, headers)
+	os.execute("cls")
+	file = io.open("Datasets/"..secondYear.year.."/"..secondYear.name..".txt")
+	ctrl = 0
+	jointHeaders = {}
+	for line in file:lines() do
+		ctrl = ctrl + 1
+		ctrls = 0
+		for k, v in pairs(headers) do
+			ctrls = ctrls + 1
+			if line == v then
+				jointHeaders[ctrl] = {ctrl, ctrls, line}
+			end
+		end
+	end
+	for k, v in pairs(census[firstYear.year][firstYear.name]) do
+		print(v[2])
+		if tostring(v[2]) == tostring(county[2]) then
+			for keys, values in pairs(census[secondYear.year][secondYear.name]) do
+				print('"'..values[2]..'"')
+				if ('"'..values[2]..'"') == county[2] then
+					ctrl = 0
+					for i = 0, (#jointHeaders - 1) do
+						ctrl = ctrl + 1
+						print(jointHeaders[ctrl][3].." : "..county[(jointHeaders[ctrl][2])].." to "..values[(jointHeaders[ctrl][1])])
+					end
+					wait = io.read()
+				end
+				if values[2] == county[2] then
+					ctrl = 0
+					for i = 0, (#jointHeaders - 1) do
+						ctrl = ctrl + 1
+						print(jointHeaders[ctrl][3].." : "..county[(jointHeaders[ctrl][2])].." to "..values[(jointHeaders[ctrl][1])])
+					end
+					wait = io.read()
+				end
+			end
+		end
+	end
+end
+
 function compare(first, second)
 	os.execute("cls")
-	print("Comparing "..first[2].." with "..second[2])
-	wait = io.read()
+	print("Comparing "..first[2].." with "..second[2].."\n\n")
 	ctrl = 0
 	for k, v in pairs(first) do
 		ctrl = ctrl + 1
@@ -47,19 +87,64 @@ function compare(first, second)
 	wait = io.read()
 end
 
-function checkYears(first, second)
-	comparab;e = {}
-	file = io.open("Datasets/"..first.."/types.txt")
+function checkYears(firstYear, secondYear, types)
+	file = io.open("Datasets/"..firstYear.."/types.txt")
 	yearC = ""
 	for line in file:lines() do
-		yearC = yearC..line
-	end
-	file = io.open("Datasets/"..second.."/types.txt")
-	for line in file:lines() do
-		if string.find(yearC, line) ~= nil then
-			comparable[#comparable + 1] = line
+		if line == tostring(types) then
+			yearC = true
 		end
 	end
+	if yearC == true then
+		file = io.open("Datasets/"..secondYear.."/types.txt")
+		for line in file:lines() do
+			if line == tostring(types) then
+
+				return true
+			end
+		end
+	end
+end
+
+function compareYearMenu(firstYear, county, headers)
+	os.execute("cls")
+	print("These years contain "..firstYear.name..".\n\n")
+	for k,  v in pairs(years) do
+		if v ~= nil then
+			if checkYears(firstYear.year, v.name, firstYear.name) then
+				print(v.name)
+			end
+		end
+	end
+	print("\nType the name of your selection.  Type 'b'")
+	x = io.read()
+	--takes apart years table
+	for k, v in pairs(years) do
+		if tostring(x) == v.name then
+			print("hey")
+				ctrl = 0
+				for key, value in pairs(v) do
+					ctrl = ctrl + 1
+						if ctrl == 3 then
+							ctrls = 0
+							--ka/ke is key va/ve is value in table
+							for ke, va in pairs(value) do
+								if tostring(va.name) == tostring(firstYear.name) then
+									print("hey")
+									displayYearCompareData(firstYear, va, county, headers)
+								end
+							end
+
+						end
+				end
+		end
+	end
+	if tostring(x) == "b" then
+		compareMenu(county, firstYear, headers)
+	else
+		compareYearMenu(firstYear, county, headers)
+	end
+
 end
 
 function compareMenu(first, currentYear, headers)
@@ -68,7 +153,7 @@ function compareMenu(first, currentYear, headers)
 	for k, v in pairs(census[currentYear.year][currentYear.name]) do
 		print("Key : "..v[1].. "  County : "..v[2])
 	end
-	print('\n  Type the key, including the "", of the selection you would like to make. Type "c" to return to the county menu.')
+	print('\n  Type the key, including the "", of the selection you would like to make. Type "c" to return to the county menu.  Type "y" to compare to the same county in a different census.')
 	x = io.read()
 	for k, v in pairs(census[currentYear.year][currentYear.name]) do
 		if tostring(x) == v[1] then
@@ -77,6 +162,8 @@ function compareMenu(first, currentYear, headers)
 	end
 	if tostring(x) == "c" then
 		currentYear:displayData()
+	elseif tostring(x) == "y" then
+		compareYearMenu(currentYear, first, headers)
 	else
 		compareMenu(first, currentYear, headers)
 	end
@@ -205,7 +292,9 @@ function load()
 			years[ctrl].types[ctrls] = l
 			ctrls = ctrls + 1
 		end
+		ctrl = ctrl + 1
 	end
+	loadMenu()
 end
 
 function loadMenu()
@@ -234,8 +323,18 @@ function loadMenu()
 end
 
 load()
-loadMenu()
 
---[[for k, v in pairs(census["2001"]["ethnic"][1]) do
-	print(v)
-	end]]
+--[[for k, v in pairs(years) do
+	ctrl = 0
+	for key, value in pairs(v) do
+		ctrl = ctrl + 1
+		print(value)
+		if ctrl == 3 then
+			for ke, va in pairs(value) do
+				print(va)
+			end
+		end
+	end
+	wait = io.read()
+end]]--
+
