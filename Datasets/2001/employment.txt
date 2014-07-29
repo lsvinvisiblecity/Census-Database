@@ -1,0 +1,17 @@
+Key
+County
+All people aged 16-74
+Part-time
+Full-time
+Self-employed
+Unemployed
+Full-time student
+Retired
+Student(inactive)
+Looking after family/home
+Permanently sick/disabled
+Other
+16-24(Unemployed)
+50+(Unemployed)
+Never worked
+Long-term unemployed

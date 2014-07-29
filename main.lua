@@ -6,7 +6,6 @@ n = 0
 
 year = {}
 year.__index = year
-
 types = {}
 types.__index = types
 
@@ -28,6 +27,8 @@ function types.create(name,year)
 end
 
 function displayYearCompareData(firstYear, secondYear, county, headers)
+	print("hey")
+	wait = io.read()
 	os.execute("cls")
 	file = io.open("Datasets/"..secondYear.year.."/"..secondYear.name..".txt")
 	ctrl = 0
@@ -121,18 +122,20 @@ function compareYearMenu(firstYear, county, headers)
 	--takes apart years table
 	for k, v in pairs(years) do
 		if tostring(x) == v.name then
-			print("hey")
 				ctrl = 0
 				for key, value in pairs(v) do
 					ctrl = ctrl + 1
+						print(value)
 						if ctrl == 3 then
 							ctrls = 0
 							--ka/ke is key va/ve is value in table
 							for ke, va in pairs(value) do
-								if tostring(va.name) == tostring(firstYear.name) then
-									print("hey")
-									displayYearCompareData(firstYear, va, county, headers)
+								print(va)
+								print(firstYear.name)
+								if tostring(va) == tostring(firstYear.name) then
+									displayYearCompareData(firstYear, v, county, headers)
 								end
+								wait = io.read()
 							end
 
 						end
@@ -147,17 +150,27 @@ function compareYearMenu(firstYear, county, headers)
 
 end
 
+
 function compareMenu(first, currentYear, headers)
 	os.execute("cls")
 	print("You are comparing things to : "..first[2])
 	for k, v in pairs(census[currentYear.year][currentYear.name]) do
 		print("Key : "..v[1].. "  County : "..v[2])
 	end
-	print('\n  Type the key, including the "", of the selection you would like to make. Type "c" to return to the county menu.  Type "y" to compare to the same county in a different census.')
+	print('\n  Type the key of the selection you would like to make. Type "c" to return to the county menu.  Type "y" to compare to the same county in a different census.')
 	x = io.read()
-	for k, v in pairs(census[currentYear.year][currentYear.name]) do
-		if tostring(x) == v[1] then
-			compare(first, v)
+	sm1, sm2 = string.find(x,'"')
+	if sm1 ~= nil and sm2 ~= nil then
+		for k, v in pairs(census[currentYear.year][currentYear.name]) do
+			if tostring(x) == v[1] then
+				compare(first, v)
+			end
+		end
+	else
+		for k, v in pairs(census[currentYear.year][currentYear.name]) do
+			if '"'..tostring(x)..'"' == v[1] then
+				compare(first, v)
+			end
 		end
 	end
 	if tostring(x) == "c" then
@@ -186,7 +199,6 @@ end
 
 function types:displayData()
 	os.execute("cls")
-	parseData(self.year, self.name)
 	file = io.open("Datasets/"..self.year.."/"..self.name..".txt")
 	headers = {}
 	ctrl = 0
@@ -197,11 +209,20 @@ function types:displayData()
 	for k, v in pairs(census[self.year][self.name]) do
 		print("Key : "..v[1].. "  County : "..v[2])
 	end
-	print('\nType the key of your selection including the "".  Type "b" to go back.')
+	print('\nType the key of your selection.  Type "b" to go back.')
 	x = io.read()
-	for k, v in pairs(census[self.year][self.name]) do
-		if tostring(x) == v[1] then
-			v:display(headers, self)
+	sm1, sm2 = string.find(x, '"')
+	if sm1 ~= nil and sm2 ~= nil then
+		for k, v in pairs(census[self.year][self.name]) do
+			if tostring(x) == v[1] then
+				v:display(headers, self)
+			end
+		end
+	else
+		for k, v in pairs(census[self.year][self.name]) do
+			if '"'..tostring(x)..'"' == v[1] then
+				v:display(headers, self)
+			end
 		end
 	end
 	if tostring(x) == "b" then
@@ -214,24 +235,16 @@ end
 
 function year:loadMenu()
 	os.execute("cls")
-	file = io.open("Datasets/"..self.name.."/types.txt")
-	ctrl = 0
-	for line in file:lines() do
-		self.types[ctrl] = types.create(line,self.name)
-		self.types[ctrl].number = ctrl
-		createTypeTable(self.name, self.types[ctrl].name)
-		ctrl = ctrl + 1
-	end
 	ctrls = 0
-	for k, v in pairs(self.types) do
+	for k, v in pairs(self.type) do
 		ctrls = ctrls + 1
 	end
 	for i = 0, ctrls - 1 do
-		print(i..")"..self.types[i].name)
+		print(i..")"..self.type[i].name)
 	end
 	print("\nEnter the selection you would like to make.  Type 'b' to go back to the main menu.")
 	x = io.read()
-	for k, v in pairs(self.types) do
+	for k, v in pairs(self.type) do
 		if tonumber(x) == v.number then
 			v:displayData()
 		end
@@ -285,11 +298,15 @@ function load()
 	for line in file:lines() do
 		years[ctrl] = year.create(line)
 		years[ctrl].number = ctrl + 1
-		years[ctrl].types = {}
+		years[ctrl].type = {}
+		createYearTable(years[ctrl].name)
 		f = io.open("Datasets/"..years[ctrl].name.."/types.txt")
 		ctrls = 0
-		for l in f:lines() do
-			years[ctrl].types[ctrls] = l
+		for lined in f:lines() do
+			years[ctrl].type[ctrls] = types.create(lined,years[ctrl].name)
+			years[ctrl].type[ctrls].number = ctrls
+			createTypeTable(years[ctrls].name, years[ctrl].type[ctrls].name)
+			parseData(years[ctrl].name, years[ctrl].type[ctrls].name)
 			ctrls = ctrls + 1
 		end
 		ctrl = ctrl + 1
@@ -324,11 +341,11 @@ end
 
 load()
 
---[[for k, v in pairs(years) do
+for k, v in pairs(years) do
 	ctrl = 0
 	for key, value in pairs(v) do
 		ctrl = ctrl + 1
-		print(value)
+		--print(key)
 		if ctrl == 3 then
 			for ke, va in pairs(value) do
 				print(va)
@@ -336,5 +353,5 @@ load()
 		end
 	end
 	wait = io.read()
-end]]--
+end
 
