@@ -353,5 +353,9 @@ for k, v in pairs(years) do
 		end
 	end
 	wait = io.read()
+<<<<<<< HEAD
 end
 
+=======
+end]]--
+>>>>>>> 4ef28bdac3063bfaf80fac46e6ac69ac6b3714bf
