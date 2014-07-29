@@ -27,6 +27,7 @@ function types.create(name,year)
 end
 
 function displayYearCompareData(firstYear, secondYear, county, headers)
+	parseData(secondYear.year, secondYear.name)
 	print("hey")
 	wait = io.read()
 	os.execute("cls")
@@ -125,13 +126,15 @@ function compareYearMenu(firstYear, county, headers)
 				ctrl = 0
 				for key, value in pairs(v) do
 					ctrl = ctrl + 1
-						print(value)
+						--print(value)
+						print(ctrl)
 						if ctrl == 3 then
 							ctrls = 0
 							--ka/ke is key va/ve is value in table
 							for ke, va in pairs(value) do
 								print(va)
 								print(firstYear.name)
+								wait = io.read()
 								if tostring(va) == tostring(firstYear.name) then
 									displayYearCompareData(firstYear, v, county, headers)
 								end
@@ -199,6 +202,7 @@ end
 
 function types:displayData()
 	os.execute("cls")
+	parseData(self.year, self.name)
 	file = io.open("Datasets/"..self.year.."/"..self.name..".txt")
 	headers = {}
 	ctrl = 0
@@ -235,16 +239,24 @@ end
 
 function year:loadMenu()
 	os.execute("cls")
+	f = io.open("Datasets/"..self.name.."/types.txt")
+		ctrls = 0
+		for lined in f:lines() do
+			self.typed[ctrls] = types.create(lined,self.name)
+			self.typed[ctrls].number = ctrls
+			createTypeTable(self.name, self.typed[ctrls].name)
+			ctrls = ctrls + 1
+		end
 	ctrls = 0
-	for k, v in pairs(self.type) do
+	for k, v in pairs(self.typed) do
 		ctrls = ctrls + 1
 	end
 	for i = 0, ctrls - 1 do
-		print(i..")"..self.type[i].name)
+		print(i..")"..self.typed[i].name)
 	end
 	print("\nEnter the selection you would like to make.  Type 'b' to go back to the main menu.")
 	x = io.read()
-	for k, v in pairs(self.type) do
+	for k, v in pairs(self.typed) do
 		if tonumber(x) == v.number then
 			v:displayData()
 		end
@@ -298,17 +310,8 @@ function load()
 	for line in file:lines() do
 		years[ctrl] = year.create(line)
 		years[ctrl].number = ctrl + 1
-		years[ctrl].type = {}
+		years[ctrl].typed = {}
 		createYearTable(years[ctrl].name)
-		f = io.open("Datasets/"..years[ctrl].name.."/types.txt")
-		ctrls = 0
-		for lined in f:lines() do
-			years[ctrl].type[ctrls] = types.create(lined,years[ctrl].name)
-			years[ctrl].type[ctrls].number = ctrls
-			createTypeTable(years[ctrls].name, years[ctrl].type[ctrls].name)
-			parseData(years[ctrl].name, years[ctrl].type[ctrls].name)
-			ctrls = ctrls + 1
-		end
 		ctrl = ctrl + 1
 	end
 	loadMenu()
@@ -341,21 +344,3 @@ end
 
 load()
 
-for k, v in pairs(years) do
-	ctrl = 0
-	for key, value in pairs(v) do
-		ctrl = ctrl + 1
-		--print(key)
-		if ctrl == 3 then
-			for ke, va in pairs(value) do
-				print(va)
-			end
-		end
-	end
-	wait = io.read()
-<<<<<<< HEAD
-end
-
-=======
-end]]--
->>>>>>> 4ef28bdac3063bfaf80fac46e6ac69ac6b3714bf
