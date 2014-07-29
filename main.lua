@@ -223,14 +223,12 @@ function types:displayData()
 	if sm3 ~= nil and sm4 ~= nil then
 		if sm1 ~= nil and sm2 ~= nil then
 			for k, v in pairs(census[self.year][self.name]) do
-				print(v[1])
 				if x == v[1] then
 					v:display(headers, self)
 				end
 			end
 		else
 			for k, v in pairs(census[self.year][self.name]) do
-				print(v[1])
 				if '"'..x..'"' == v[1] then
 					v:display(headers, self)
 				end
@@ -238,7 +236,6 @@ function types:displayData()
 		end
 	else
 		for k, v in pairs(census[self.year][self.name]) do
-			print(v[1])
 			if x == v[1] then
 				v:display(headers, self)
 			end
@@ -257,7 +254,6 @@ function year:loadMenu()
 	file = io.open("Datasets/"..self.name.."/types.txt")
 	ctrl = 0
 	for line in file:lines() do
-		print(line)
 		self.types[ctrl] = types.create(line, self.name)
 		self.types[ctrl].number = ctrl
 		createTypeTable(self.name, self.types[ctrl].name)
