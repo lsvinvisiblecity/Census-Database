@@ -29,37 +29,43 @@ end
 
 function displayYearCompareData(firstYear, secondYear, county, headers)
 	os.execute("cls")
+	parseData(secondYear.year, secondYear.name)
+	print(secondYear.year)
+	wait = io.read()
 	file = io.open("Datasets/"..secondYear.year.."/"..secondYear.name..".txt")
+	f = io.open("Datasets/"..firstYear.year.."/"..firstYear.name..".txt")
 	ctrl = 0
 	jointHeaders = {}
 	for line in file:lines() do
+		print(line)
 		ctrl = ctrl + 1
 		ctrls = 0
-		for k, v in pairs(headers) do
+		for lined in f:lines() do
+			print(lined)
 			ctrls = ctrls + 1
-			if line == v then
+			if line == lined then
 				jointHeaders[ctrl] = {ctrl, ctrls, line}
+				print(jointHeaders[ctrl][1])
+				print(jointHeaders[ctrl][2])
+				print(jointHeaders[ctrl][3])
 			end
 		end
 	end
 	for k, v in pairs(census[firstYear.year][firstYear.name]) do
-		print(v[2])
-		if tostring(v[2]) == tostring(county[2]) then
+		if v[2] == county[2] then
+			print("yey")
 			for keys, values in pairs(census[secondYear.year][secondYear.name]) do
+				print(v[2])
 				print('"'..values[2]..'"')
-				if ('"'..values[2]..'"') == county[2] then
-					ctrl = 0
-					for i = 0, (#jointHeaders - 1) do
-						ctrl = ctrl + 1
-						print(jointHeaders[ctrl][3].." : "..county[(jointHeaders[ctrl][2])].." to "..values[(jointHeaders[ctrl][1])])
-					end
-					wait = io.read()
-				end
-				if values[2] == county[2] then
-					ctrl = 0
-					for i = 0, (#jointHeaders - 1) do
-						ctrl = ctrl + 1
-						print(jointHeaders[ctrl][3].." : "..county[(jointHeaders[ctrl][2])].." to "..values[(jointHeaders[ctrl][1])])
+				if ('"'..values[2]..'"') == v[2] then
+					for i = 1, #values do
+						if jointHeaders[i] then
+							print(jointHeaders[i][3])
+							print(jointHeaders[i][2])
+							print(jointHeaders[i][1])
+							wait = io.read()
+							print(jointHeaders[i][3]..") "..v[(jointHeaders[i][2])].." to "..values[(jointHeaders[i][1])])
+						end
 					end
 					wait = io.read()
 				end
@@ -124,15 +130,21 @@ function compareYearMenu(firstYear, county, headers)
 			print("hey")
 				ctrl = 0
 				for key, value in pairs(v) do
-					print(value)
 					ctrl = ctrl + 1
+					print(key.." :", value, ctrl)
 						if ctrl == 3 then
 							ctrls = 0
 							--ka/ke is key va/ve is value in table
 							for ke, va in pairs(value) do
-								if tostring(va) == tostring(firstYear.name) then
-									print("hey")
-									displayYearCompareData(firstYear, value, county, headers)
+								ctrls = 0
+								for ka, ve in pairs(va) do
+									ctrls = ctrls + 1
+									print(firstYear.name)
+									print(ve)
+									wait = io.read()
+									if tostring(ve) == firstYear.name then
+										displayYearCompareData(firstYear, va, county, headers)
+									end
 								end
 							end
 
@@ -249,8 +261,7 @@ function types:displayData()
 
 end
 
-function year:loadMenu()
-	os.execute("cls")
+function year:load()
 	file = io.open("Datasets/"..self.name.."/types.txt")
 	ctrl = 0
 	for line in file:lines() do
@@ -259,6 +270,10 @@ function year:loadMenu()
 		createTypeTable(self.name, self.types[ctrl].name)
 		ctrl = ctrl + 1
 	end
+end
+
+function year:loadMenu()
+	os.execute("cls")
 	ctrls = 0
 	for k, v in pairs(self.types) do
 		ctrls = ctrls + 1
@@ -329,6 +344,9 @@ function load()
 			years[ctrl].types[ctrls] = l
 			ctrls = ctrls + 1
 		end
+		createYearTable(years[ctrl].name)
+		years[ctrl]:load()
+--		print(years[ctrl].name)
 		ctrl = ctrl + 1
 	end
 	loadMenu()
@@ -336,18 +354,15 @@ end
 
 function loadMenu()
 	os.execute("cls")
-	ctrl = 0
+	ctrl = 1
 	for k, v in pairs(years) do
+		print((ctrl)..") "..v.name)
 		ctrl = ctrl + 1
-	end
-	for i = 0, ctrl - 1 do
-		print((i + 1)..") "..years[i].name)
 	end
 	print("\nEnter the value you would like to select. Enter 'e' to exit.")
 	x = io.read()
 	for k, v in pairs(years) do
 		if tonumber(x) == v.number then
-			createYearTable(v.name)
 			v:loadMenu()
 		end
 	end
