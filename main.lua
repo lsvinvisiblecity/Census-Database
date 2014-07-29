@@ -47,6 +47,21 @@ function compare(first, second)
 	wait = io.read()
 end
 
+function checkYears(first, second)
+	comparab;e = {}
+	file = io.open("Datasets/"..first.."/types.txt")
+	yearC = ""
+	for line in file:lines() do
+		yearC = yearC..line
+	end
+	file = io.open("Datasets/"..second.."/types.txt")
+	for line in file:lines() do
+		if string.find(yearC, line) ~= nil then
+			comparable[#comparable + 1] = line
+		end
+	end
+end
+
 function compareMenu(first, currentYear, headers)
 	os.execute("cls")
 	print("You are comparing things to : "..first[2])
