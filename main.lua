@@ -53,7 +53,7 @@ function compareMenu(first, currentYear, headers)
 	for k, v in pairs(census[currentYear.year][currentYear.name]) do
 		print("Key : "..v[1].. "  County : "..v[2])
 	end
-	print('\n  Type to key, including the "", of the selection you would like to make. Type "c" to return to the county menu.')
+	print('\n  Type the key, including the "", of the selection you would like to make. Type "c" to return to the county menu.')
 	x = io.read()
 	for k, v in pairs(census[currentYear.year][currentYear.name]) do
 		if tostring(x) == v[1] then
