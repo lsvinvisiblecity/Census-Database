@@ -124,14 +124,15 @@ function compareYearMenu(firstYear, county, headers)
 			print("hey")
 				ctrl = 0
 				for key, value in pairs(v) do
+					print(value)
 					ctrl = ctrl + 1
 						if ctrl == 3 then
 							ctrls = 0
 							--ka/ke is key va/ve is value in table
 							for ke, va in pairs(value) do
-								if tostring(va.name) == tostring(firstYear.name) then
+								if tostring(va) == tostring(firstYear.name) then
 									print("hey")
-									displayYearCompareData(firstYear, va, county, headers)
+									displayYearCompareData(firstYear, value, county, headers)
 								end
 							end
 
@@ -156,18 +157,27 @@ function compareMenu(first, currentYear, headers)
 	print('\n  Type the key of the selection you would like to make. Type "c" to return to the county menu.  Type "y" to compare to the same county in a different census.')
 	x = io.read()
 	sm1, sm2 = string.find(x,'"')
-	if sm1 ~= nil and sm2 ~= nil then
-		for k, v in pairs(census[currentYear.year][currentYear.name]) do
-			if tostring(x) == v[1] then
-				compare(first, v)
+	sm3, sm4 = string.find(census[currentYear.year][currentYear.name][1][1], '"')
+	if sm3 ~= nil and sm4 ~= nil then
+		if sm1 ~= nil and sm2 ~= nil then
+			for k, v in pairs(census[currentYear.year][currentYear.name]) do
+				if tostring(x) == v[1] then
+					compare(first, v)
+				end
+			end
+		else
+			for k, v in pairs(census[currentYear.year][currentYear.name]) do
+				if '"'..tostring(x)..'"' == v[1] then
+					compare(first, v)
+				end
 			end
 		end
 	else
 		for k, v in pairs(census[currentYear.year][currentYear.name]) do
-			if '"'..tostring(x)..'"' == v[1] then
-				compare(first, v)
+				if tostring(x) == v[1] then
+					compare(first, v)
+				end
 			end
-		end
 	end
 	if tostring(x) == "c" then
 		currentYear:displayData()
@@ -209,15 +219,27 @@ function types:displayData()
 	print('\nType the key of your selection.  Type "b" to go back.')
 	x = io.read()
 	sm1, sm2 = string.find(x, '"')
-	if sm1 ~= nil and sm2 ~= nil then
-		for k, v in pairs(census[self.year][self.name]) do
-			if tostring(x) == v[1] then
-				v:display(headers, self)
+	sm3, sm4 = string.find(census[self.year][self.name][1][1], '"')
+	if sm3 ~= nil and sm4 ~= nil then
+		if sm1 ~= nil and sm2 ~= nil then
+			for k, v in pairs(census[self.year][self.name]) do
+				print(v[1])
+				if x == v[1] then
+					v:display(headers, self)
+				end
+			end
+		else
+			for k, v in pairs(census[self.year][self.name]) do
+				print(v[1])
+				if '"'..x..'"' == v[1] then
+					v:display(headers, self)
+				end
 			end
 		end
 	else
 		for k, v in pairs(census[self.year][self.name]) do
-			if '"'..tostring(x)..'"' == v[1] then
+			print(v[1])
+			if x == v[1] then
 				v:display(headers, self)
 			end
 		end
@@ -235,7 +257,8 @@ function year:loadMenu()
 	file = io.open("Datasets/"..self.name.."/types.txt")
 	ctrl = 0
 	for line in file:lines() do
-		self.types[ctrl] = types.create(line,self.name)
+		print(line)
+		self.types[ctrl] = types.create(line, self.name)
 		self.types[ctrl].number = ctrl
 		createTypeTable(self.name, self.types[ctrl].name)
 		ctrl = ctrl + 1
