@@ -1,2 +1,5 @@
 Ethnic
 Religion
+Living
+Marriage
+Age

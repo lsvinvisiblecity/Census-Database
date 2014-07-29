@@ -1,0 +1,9 @@
+Key
+County
+All people(over 16)
+Single(never married)
+Married
+Re-married
+Seperated(legally married)
+Divorced
+Widowed

@@ -48,7 +48,7 @@ function compare(first, second)
 end
 
 function checkYears(first, second)
-	comparab;e = {}
+	comparable = {}
 	file = io.open("Datasets/"..first.."/types.txt")
 	yearC = ""
 	for line in file:lines() do
@@ -69,6 +69,20 @@ function compareMenu(first, currentYear, headers)
 		print("Key : "..v[1].. "  County : "..v[2])
 	end
 	print('\n  Type the key of the selection you would like to make. Type "c" to return to the county menu.')
+	x = io.read()
+	sp1, sp2 = string.find(x,'"')
+	if sp1 ~= nil and sp2 ~= nil then
+		for k, v in pairs(census[currentYear.year][currentYear.name]) do
+			if tostring(x) == v[1] then
+				compare(first, v)
+			end
+		end
+	else
+		for k, v in pairs(census[currentYear.year][currentYear.name]) do
+			if '"'..tostring(x)..'"' == v[1] then
+				compare(first, v)
+			end
+	print('\n  Type the key, including the "", of the selection you would like to make. Type "c" to return to the county menu.')
 	x = io.read()
 	sp1, sp2 = string.find(x,'"')
 	if sp1 ~= nil and sp2 ~= nil then
@@ -119,7 +133,7 @@ function types:displayData()
 	for k, v in pairs(census[self.year][self.name]) do
 		print("Key : "..v[1].. "  County : "..v[2])
 	end
-	print('\nType the key of your selection including the "".  Type "b" to go back.')
+	print('\nType the key of your selection.  Type "b" to go back.')
 	x = io.read()
 	for k, v in pairs(census[self.year][self.name]) do
 		if tostring(x) == v[1] then
@@ -153,9 +167,18 @@ function year:loadMenu()
 	end
 	print("\nEnter the selection you would like to make.  Type 'b' to go back to the main menu.")
 	x = io.read()
-	for k, v in pairs(self.types) do
-		if tonumber(x) == v.number then
-			v:displayData()
+	sp1, sp2 = string.find(x,'"')
+	if sp1 ~= nil and sp2 ~= nil then
+		for k, v in pairs(self.types) do
+			if tonumber(x) == v.number then
+				v:displayData()
+			end
+		end
+	else
+		for k, v in pairs(self.types) do
+			if '"'..tonumber(x)..'"' == v.number then
+				v:displayData()
+			end
 		end
 	end
 	if tostring(x) == "b" then

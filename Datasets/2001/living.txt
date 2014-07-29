@@ -1,0 +1,10 @@
+Key
+County
+All People(over 16)
+Married or re-married (living in a couple)
+Cohabiting
+Single(never married)
+Married or re-married(not living in a couple)
+Seperated(but still legally married)
+Divorced
+Widowed

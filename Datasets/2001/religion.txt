@@ -1,10 +1,11 @@
+Key
+County
 All People
 Christian
 Buddhist
-hindu
+Hindu
 Jewish
 Muslim
-Jewish
 Sikh
 Other Religions
 No Religion
