@@ -56,6 +56,24 @@ function displayYearCompareData(firstYear, secondYear, county, headers)
 					end
 					wait = io.read()
 				end
+				if values[2] == ('"'..v[2]..'"') then
+					print(firstYear.year.." to "..secondYear.year)
+					for i = 1, #values do
+						if jointHeaders[i] then
+							print(jointHeaders[i][3]..") "..v[(jointHeaders[i][2])].." to "..values[(jointHeaders[i][1])])
+						end
+					end
+					wait = io.read()
+				end
+				if values[2] == v[2] then
+					print(firstYear.year.." to "..secondYear.year)
+					for i = 1, #values do
+						if jointHeaders[i] then
+							print(jointHeaders[i][3]..") "..v[(jointHeaders[i][2])].." to "..values[(jointHeaders[i][1])])
+						end
+					end
+					wait = io.read()
+				end
 			end
 		end
 	end
