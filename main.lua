@@ -360,6 +360,7 @@ function loadMenu()
 		ctrl = ctrl + 1
 	end
 	print("\nEnter the value you would like to select. Enter 'e' to exit.")
+	print("\nIn census-census comparisons, only the data that show up in both records are displayed.  Other data where the data only exists in one census is not displayed in census-census comparisons.")
 	x = io.read()
 	for k, v in pairs(years) do
 		if tonumber(x) == v.number then
