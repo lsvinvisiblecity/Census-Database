@@ -1,0 +1,22 @@
+Key
+County
+Total
+England
+Scotland
+Wales
+Rest of UK
+Irish Republic
+Old Commonwealth
+New Commonwealth
+Eastern Africa
+Other Africa
+Caribbean
+India
+Bangladesh
+Far East
+Mediterranen
+Remainder
+Pakistan
+Other European Community
+Other Europe
+Rest of the World

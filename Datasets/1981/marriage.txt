@@ -1,0 +1,9 @@
+Key
+County
+Total
+Total(male)
+Single, widowed or divorced(male)
+Married(male)
+Total(female)
+Single, widowed or divorced(female)
+Married(female)

@@ -344,6 +344,7 @@ function load()
 			years[ctrl].types[ctrls] = l
 			ctrls = ctrls + 1
 		end
+
 		createYearTable(years[ctrl].name)
 		years[ctrl]:load()
 		ctrl = ctrl + 1

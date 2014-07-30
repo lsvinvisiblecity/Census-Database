@@ -1,0 +1,5 @@
+Key
+County
+Vacant Dwelling
+Absent Household
+Hotels & boarding houses

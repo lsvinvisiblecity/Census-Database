@@ -1,0 +1,11 @@
+Key
+County
+Population(Present)
+(^)Visitors resident in LA
+(^)Visitors to LA(Resident in GB)
+(^)Visitors to GB
+Population is private households
+(^)Resident at address of enum.
+Population not in private households
+(^)Resident in the establishment
+uNIT

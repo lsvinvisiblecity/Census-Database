@@ -1,6 +1,6 @@
 Key
 County
-All people(over 16)
+All People
 Single(never married)
 Married
 Re-married

@@ -1,0 +1,18 @@
+Key
+County
+Total(EA)
+Males(EA)
+Total(EA Females)
+Single/Widowed/Divorced(EA Females)
+Married(Females)
+Total(Full-time)
+Males(Full-time)
+Total(Full-time Females)
+Single/Widowed/Divorced(Full-time Females)
+Married(Full-time Females)
+Total(Unemployed)
+Males(Unemployed)
+Total(Unemployed Females)
+Single/Widowed/Divorced(Unemployed Females)
+Married(Unemployed Females)
+Self-employed
