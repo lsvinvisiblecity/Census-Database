@@ -1,6 +1,6 @@
-age
-country(female)
-country(male)
-economic
-marriage
-population
+Age
+Country(female)
+Country(male)
+Economic
+Marriage
+Population

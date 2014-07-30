@@ -1,5 +1,5 @@
-country(female)
-country(male)
-population
+Country(female)
+Country(male)
+Population
 Hotels
 Travel
