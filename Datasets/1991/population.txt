@@ -1,0 +1,9 @@
+Key
+County
+All People
+Total(In households)
+Males(In households)
+Females(In households)
+Total(Not in households)
+Males(Not in households)
+Females(Not in households)

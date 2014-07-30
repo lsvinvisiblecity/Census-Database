@@ -1,0 +1,16 @@
+Key
+County
+All People
+Total(EA)
+Total(Full-time)
+Total(Part-time)
+self-employed(with employees)
+Self-employed(without employees)
+On a government scheme
+Total(Unemployed)
+Students(EA)
+Total(Non EA)
+Students(Non EA)
+Permantly sick/disabled
+Retired
+Other Inactive

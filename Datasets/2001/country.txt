@@ -1,0 +1,10 @@
+Key
+County
+All People
+England
+Scotland
+Wales
+Northern Ireland
+Republic of Ireland
+Other EU countries
+Elsewhere

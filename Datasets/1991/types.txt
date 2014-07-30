@@ -1,2 +1,9 @@
 Ethnic
 Age
+Marriage
+Population
+Country(male)
+Country(female)
+Age
+Economic(male)
+Economic(female)

@@ -1,0 +1,24 @@
+Key
+County
+All People
+United Kingdom
+England
+Scotland
+Wales
+Northern Ireland
+Irish Republic
+Old Commonwealth
+New Commonwealth
+Eastern Africa
+Other Africa
+Caribbean
+Bangladesh
+India
+Pakistan
+South East Asia
+Cyprus
+Other New Commonwealth
+Other European Community
+Other Europe
+China
+Rest of the World

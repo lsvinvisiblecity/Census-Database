@@ -1,0 +1,15 @@
+Key
+County
+All People
+Part-time
+Full-time
+self-employed
+Unemployed
+Full-time student
+Retired
+Student
+Looking after family/home
+Permantly sick/disabled
+other
+Never Worked
+Long-term unemployed
