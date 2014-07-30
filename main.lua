@@ -245,12 +245,12 @@ end
 
 function year:load()
 	file = io.open("Datasets/"..self.name.."/types.txt")
-	ctrl = 0
+	ctrld = 0
 	for line in file:lines() do
-		self.types[ctrl] = types.create(line, self.name)
-		self.types[ctrl].number = ctrl
-		createTypeTable(self.name, self.types[ctrl].name)
-		ctrl = ctrl + 1
+		self.types[ctrld] = types.create(line, self.name)
+		self.types[ctrld].number = ctrld
+		createTypeTable(self.name, self.types[ctrld].name)
+		ctrld = ctrld + 1
 	end
 end
 
@@ -328,7 +328,6 @@ function load()
 		end
 		createYearTable(years[ctrl].name)
 		years[ctrl]:load()
---		print(years[ctrl].name)
 		ctrl = ctrl + 1
 	end
 	loadMenu()
@@ -338,7 +337,7 @@ function loadMenu()
 	os.execute("cls")
 	ctrl = 1
 	for k, v in pairs(years) do
-		print((ctrl)..") "..v.name)
+		print(v.number..") "..v.name)
 		ctrl = ctrl + 1
 	end
 	print("\nEnter the value you would like to select. Enter 'e' to exit.")
