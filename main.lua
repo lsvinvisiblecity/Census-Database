@@ -30,40 +30,27 @@ end
 function displayYearCompareData(firstYear, secondYear, county, headers)
 	os.execute("cls")
 	parseData(secondYear.year, secondYear.name)
-	print(secondYear.year)
-	wait = io.read()
 	file = io.open("Datasets/"..secondYear.year.."/"..secondYear.name..".txt")
-	f = io.open("Datasets/"..firstYear.year.."/"..firstYear.name..".txt")
 	ctrl = 0
 	jointHeaders = {}
 	for line in file:lines() do
-		print(line)
 		ctrl = ctrl + 1
 		ctrls = 0
+		f = io.open("Datasets/"..firstYear.year.."/"..firstYear.name..".txt")
 		for lined in f:lines() do
-			print(lined)
 			ctrls = ctrls + 1
 			if line == lined then
 				jointHeaders[ctrl] = {ctrl, ctrls, line}
-				print(jointHeaders[ctrl][1])
-				print(jointHeaders[ctrl][2])
-				print(jointHeaders[ctrl][3])
 			end
 		end
 	end
 	for k, v in pairs(census[firstYear.year][firstYear.name]) do
 		if v[2] == county[2] then
-			print("yey")
 			for keys, values in pairs(census[secondYear.year][secondYear.name]) do
-				print(v[2])
-				print('"'..values[2]..'"')
 				if ('"'..values[2]..'"') == v[2] then
+					print(firstYear.year.." to "..secondYear.year)
 					for i = 1, #values do
 						if jointHeaders[i] then
-							print(jointHeaders[i][3])
-							print(jointHeaders[i][2])
-							print(jointHeaders[i][1])
-							wait = io.read()
 							print(jointHeaders[i][3]..") "..v[(jointHeaders[i][2])].." to "..values[(jointHeaders[i][1])])
 						end
 					end
@@ -127,11 +114,9 @@ function compareYearMenu(firstYear, county, headers)
 	--takes apart years table
 	for k, v in pairs(years) do
 		if tostring(x) == v.name then
-			print("hey")
 				ctrl = 0
 				for key, value in pairs(v) do
 					ctrl = ctrl + 1
-					print(key.." :", value, ctrl)
 						if ctrl == 3 then
 							ctrls = 0
 							--ka/ke is key va/ve is value in table
@@ -139,9 +124,6 @@ function compareYearMenu(firstYear, county, headers)
 								ctrls = 0
 								for ka, ve in pairs(va) do
 									ctrls = ctrls + 1
-									print(firstYear.name)
-									print(ve)
-									wait = io.read()
 									if tostring(ve) == firstYear.name then
 										displayYearCompareData(firstYear, va, county, headers)
 									end
