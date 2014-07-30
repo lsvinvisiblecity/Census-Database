@@ -77,25 +77,130 @@ function displayYearCompareData(firstYear, secondYear, county, headers)
 			end
 		end
 	end
+	print("\nWould you like the data saved to another directory? (y/n")
+	x = io.read()
+	if x == "n" then
+
+	elseif x == "y" then
+		print("Please give a file name.")
+		x = io.read()
+		file = io.open(("Compare saves/"..tostring(x)..".csv"), "w")
+		for key, value in pairs(jointHeaders) do
+			file:write(value[3])
+			file:write(",")
+		end
+		ctrl = 1
+		file:write("\n")
+		for ctrl = 1, #jointHeaders do
+			for k, v in pairs(census[firstYear.year][firstYear.name]) do
+				if v[2] == county[2] then
+					file:write(v[(jointHeaders[ctrl][2])])
+					file:write(",")
+				end
+			end
+
+		end
+		file:write("\n")
+		for ctrl = 1, #jointHeaders do
+			for k, v in pairs(census[secondYear.year][secondYear.name]) do
+				if v[2] == county[2] then
+					file:write(v[(jointHeaders[ctrl][1])])
+					file:write(",")
+				end
+				if ('"'..v[2]..'"') then
+					file:write(v[(jointHeaders[ctrl][1])])
+					file:write(",")
+				end
+				if v[2] == ('"'..county[2]..'"') then
+					file:write(v[(jointHeaders[ctrl][1])])
+					file:write(",")
+				end
+			end
+		end
+		wait = io.read()
+		ctrl = 0
+		file:close()
+		file = io.open("Compare Saves/"..tostring(x)..".csv", "r")
+		if file == nil then
+			print("Write failed")
+		end
+		file:close()
+	else
+		compare(first, second)
+	end
 end
 
 function compare(first, second)
 	os.execute("cls")
 	print("Comparing "..first[2].." with "..second[2].."\n\n")
-	ctrl = 0
-	for k, v in pairs(first) do
-		ctrl = ctrl + 1
-		if ctrl > 2 then
-			if tonumber(first[ctrl]) > tonumber(second[ctrl]) then
-				print(headers[ctrl]..") "..first[ctrl].."  :  "..second[ctrl].."  "..first[2].." is greater than "..second[2].." by ".. (first[ctrl] - second[ctrl]))
+		ctrl = 0
+		for k, v in pairs(first) do
+			ctrl = ctrl + 1
+			if ctrl > 2 then
+				if tonumber(first[ctrl]) > tonumber(second[ctrl]) then
+					print(headers[ctrl]..") "..first[ctrl].."  :  "..second[ctrl].."  "..first[2].." is greater than "..second[2].." by ".. (first[ctrl] - second[ctrl]))
+				else
+					print(headers[ctrl]..") "..first[ctrl].."  :  "..second[ctrl].."  "..second[2].." is greater than "..first[2].." by ".. (second[ctrl] - first[ctrl]))
+				end
+
 			else
-				print(headers[ctrl]..") "..first[ctrl].."  :  "..second[ctrl].."  "..second[2].." is greater than "..first[2].." by ".. (second[ctrl] - first[ctrl]))
+				print(headers[ctrl]..") "..first[ctrl].."  :  "..second[ctrl])
 			end
-		else
-			print(headers[ctrl]..") "..first[ctrl].."  :  "..second[ctrl])
 		end
+		wait = io.read()
+	print("\nWould you like the data saved to another directory? (y/n")
+	x = io.read()
+	if x == "n" then
+
+	elseif x == "y" then
+		print("Please give a file name.")
+		x = io.read()
+		file = io.open(("Compare saves/"..tostring(x)..".csv"), "w")
+		for key, value in pairs(headers) do
+			file:write(value)
+			file:write(",")
+		end
+		ctrl = 1
+		file:write("\n")
+		for ctrl = 1, #first do
+			file:write(tostring(first[ctrl]))
+			file:write(",")
+		end
+		file:write("\n")
+		for ctrl = 1, #second do
+			file:write(tostring(second[ctrl]))
+			file:write(",")
+		end
+		wait = io.read()
+		ctrl = 0
+		for key, value in pairs(first) do
+			ctrl = ctrl + 1
+			if ctrl > 2 then
+				if tonumber(first[ctrl]) > tonumber(second[ctrl]) then
+					print(headers[ctrl]..") "..first[ctrl].."  :  "..second[ctrl].."  "..first[2].." is greater than "..second[2].." by ".. (first[ctrl] - second[ctrl]))
+				else
+					print(headers[ctrl]..") "..first[ctrl].."  :  "..second[ctrl].."  "..second[2].." is greater than "..first[2].." by ".. (second[ctrl] - first[ctrl]))
+				end
+			else
+				print(headers[ctrl]..") "..first[ctrl].."  :  "..second[ctrl])
+			end
+		end
+		file:close()
+		file = io.open("Compare Saves/"..tostring(x)..".csv", "r")
+		if file == nil then
+			print("Write failed, try again? (y/n)")
+			x = io.read()
+			if x == "y" then
+				fil:close()
+				compare(first, second)
+			else
+
+			end
+		end
+		file:close()
+	else
+		compare(first, second)
 	end
-	wait = io.read()
 end
 
 function checkYears(firstYear, secondYear, types)
@@ -174,7 +279,7 @@ function compareMenu(first, currentYear, headers)
 		if sm1 ~= nil and sm2 ~= nil then
 			for k, v in pairs(census[currentYear.year][currentYear.name]) do
 				if tostring(x) == v[1] then
-					compare(first, v)
+					compare(first, v, headers)
 				end
 			end
 		else
