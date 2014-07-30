@@ -77,7 +77,7 @@ function displayYearCompareData(firstYear, secondYear, county, headers)
 			end
 		end
 	end
-	print("\nWould you like the data saved to another directory? (y/n")
+	print("\nWould you like the data saved to another directory? (y/n)")
 	x = io.read()
 	if x == "n" then
 
@@ -85,39 +85,61 @@ function displayYearCompareData(firstYear, secondYear, county, headers)
 		print("Please give a file name.")
 		x = io.read()
 		file = io.open(("Compare saves/"..tostring(x)..".csv"), "w")
+		file:write("Year,")
 		for key, value in pairs(jointHeaders) do
 			file:write(value[3])
 			file:write(",")
 		end
 		ctrl = 1
 		file:write("\n")
-		for ctrl = 1, #jointHeaders do
+		file:write(firstYear.year..",")
+		for ctrl = 1, #(census[firstYear.year][firstYear.name])do
 			for k, v in pairs(census[firstYear.year][firstYear.name]) do
 				if v[2] == county[2] then
-					file:write(v[(jointHeaders[ctrl][2])])
-					file:write(",")
+					if jointHeaders[ctrl] then
+						file:write(v[(jointHeaders[ctrl][2])])
+						file:write(",")
+					end
+				end
+				if ('"'..v[2]..'"') == county[2] then
+					if jointHeaders[ctrl] then
+						file:write(v[(jointHeaders[ctrl][2])])
+						file:write(",")
+					end
+				end
+				if v[2] == ('"'..county[2].."'") then
+					if jointHeaders[ctrl] then
+						file:write(v[(jointHeaders[ctrl][2])])
+						file:write(",")
+					end
 				end
 			end
 
 		end
 		file:write("\n")
-		for ctrl = 1, #jointHeaders do
+		file:write(secondYear.year..",")
+		for ctrl = 1, #(census[secondYear.year][secondYear.name]) do
 			for k, v in pairs(census[secondYear.year][secondYear.name]) do
 				if v[2] == county[2] then
-					file:write(v[(jointHeaders[ctrl][1])])
-					file:write(",")
+					if jointHeaders[ctrl] then
+						file:write(v[(jointHeaders[ctrl][1])])
+						file:write(",")
+					end
 				end
-				if ('"'..v[2]..'"') then
-					file:write(v[(jointHeaders[ctrl][1])])
-					file:write(",")
+				if ('"'..v[2]..'"') == county[2] then
+					if jointHeaders[ctrl] then
+						file:write(v[(jointHeaders[ctrl][1])])
+						file:write(",")
+					end
 				end
 				if v[2] == ('"'..county[2]..'"') then
-					file:write(v[(jointHeaders[ctrl][1])])
-					file:write(",")
+					if jointHeaders[ctrl] then
+						file:write(v[(jointHeaders[ctrl][1])])
+						file:write(",")
+					end
 				end
 			end
 		end
-		wait = io.read()
 		ctrl = 0
 		file:close()
 		file = io.open("Compare Saves/"..tostring(x)..".csv", "r")
@@ -148,7 +170,7 @@ function compare(first, second)
 			end
 		end
 		wait = io.read()
-	print("\nWould you like the data saved to another directory? (y/n")
+	print("\nWould you like the data saved to another directory? (y/n)")
 	x = io.read()
 	if x == "n" then
 
