@@ -160,9 +160,9 @@ function compare(first, second)
 			ctrl = ctrl + 1
 			if ctrl > 2 then
 				if tonumber(first[ctrl]) > tonumber(second[ctrl]) then
-					print(headers[ctrl]..") "..first[ctrl].."  :  "..second[ctrl].."  "..first[2].." is greater than "..second[2].." by ".. (first[ctrl] - second[ctrl]))
+					print(headers[ctrl]..") "..first[ctrl].."  :  "..second[ctrl].."     +"..(first[ctrl]-second[ctrl]))
 				else
-					print(headers[ctrl]..") "..first[ctrl].."  :  "..second[ctrl].."  "..second[2].." is greater than "..first[2].." by ".. (second[ctrl] - first[ctrl]))
+					print(headers[ctrl]..") "..first[ctrl].."  :  "..second[ctrl].."     -"..(second[ctrl]-first[ctrl]))
 				end
 
 			else
@@ -193,15 +193,14 @@ function compare(first, second)
 			file:write(tostring(second[ctrl]))
 			file:write(",")
 		end
-		wait = io.read()
 		ctrl = 0
 		for key, value in pairs(first) do
 			ctrl = ctrl + 1
 			if ctrl > 2 then
 				if tonumber(first[ctrl]) > tonumber(second[ctrl]) then
-					print(headers[ctrl]..") "..first[ctrl].."  :  "..second[ctrl].."  "..first[2].." is greater than "..second[2].." by ".. (first[ctrl] - second[ctrl]))
+					print(headers[ctrl]..") "..first[ctrl].."  :  "..second[ctrl].."     +"..(first[ctrl]-second[ctrl]))
 				else
-					print(headers[ctrl]..") "..first[ctrl].."  :  "..second[ctrl].."  "..second[2].." is greater than "..first[2].." by ".. (second[ctrl] - first[ctrl]))
+					print(headers[ctrl]..") "..first[ctrl].."  :  "..second[ctrl].."     -"..(second[ctrl]-first[ctrl]))
 				end
 			else
 				print(headers[ctrl]..") "..first[ctrl].."  :  "..second[ctrl])
@@ -481,13 +480,16 @@ end
 
 function loadMenu()
 	os.execute("cls")
+	print("In census-census comparisons, only the data that show up in both records is displayed.  Other data where the data only exists in one census is not displayed in census-census comparisons.")
+	print("Press [Enter] to continue...")
+	wait = io.read()
+	os.execute("cls")
 	ctrl = 1
 	for k, v in pairs(years) do
 		print(v.number..") "..v.name)
 		ctrl = ctrl + 1
 	end
 	print("\nEnter the value you would like to select. Enter 'e' to exit.")
-	print("\nIn census-census comparisons, only the data that show up in both records are displayed.  Other data where the data only exists in one census is not displayed in census-census comparisons.")
 	x = io.read()
 	for k, v in pairs(years) do
 		if tonumber(x) == v.number then
